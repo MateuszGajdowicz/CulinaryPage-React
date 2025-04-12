@@ -1,0 +1,57 @@
+nav{
+    display: flex;
+    justify-content: end;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top:0;
+    background-color: hsl(36, 94%, 80%);
+
+    ul{
+        display: flex;
+        flex-direction: row;
+        margin: 0;
+
+        
+    }
+    li{
+        list-style-type: none;
+        padding: 15px 15px;
+        cursor: pointer;
+    }
+    .Dishes{
+        display: none;
+        position: absolute;
+        background-color: hsl(36, 94%, 90%);
+        width: 150px;
+        padding: 0;
+        left: 0;
+        top: 48px;
+        li{
+            width: 100%;
+            padding: 15px 0px;
+        }
+
+    }
+    .Przepisy {
+        position: relative; 
+        
+    }
+    li:hover{
+        background-color: hsl(36, 94%, 70%);
+    }
+
+.Przepisy:hover .Dishes{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+
+    
+
+}
+.Jedzonkowo{
+    position: absolute;
+    left: 10px;
+    font-weight: bold;
+}
+}
