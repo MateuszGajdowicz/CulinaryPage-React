@@ -61,7 +61,7 @@ nav{
 }
 .RecipesContainer{
     position: relative;
-    width: 50%;
+    width: 45%;
     height: auto;
     top:15%;
     left: 3%;
@@ -73,20 +73,34 @@ nav{
         border-radius: 30px;
         position: relative;
         padding: 10px;
+        height: 20%;
         box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3); /* cien */
-        img{
+        transition:  0.2s ease;
+        cursor: pointer;
+
+        .DishImage{
+            background-position: center;
+            background-size: cover;
             width: 40%;
             height: 100%;
             position: absolute;
             bottom: 0px;
             right: 0px;
+            border-top-right-radius: 30px;
+            border-bottom-right-radius: 30px;
         }
         .DescriptionContainer{
             width: 60%;
         }
+        #Name{
+            width: 60%;
+        }
 
     }
+.SingleRecipeContainer:hover{
+    transform: scale(1.02);
 
+}
 
 }
 .BackgroundContainer{
