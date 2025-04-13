@@ -1,11 +1,15 @@
+body{
+    margin: 0px;
+}
 nav{
     display: flex;
     justify-content: end;
     width: 100%;
     position: fixed;
-    left: 0;
-    top:0;
     background-color: hsl(36, 94%, 80%);
+    z-index: 1000000;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3); /* cien */
+
 
     ul{
         display: flex;
@@ -54,4 +58,44 @@ nav{
     left: 10px;
     font-weight: bold;
 }
+}
+.RecipesContainer{
+    position: relative;
+    width: 50%;
+    height: auto;
+    top:15%;
+    left: 3%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    .SingleRecipeContainer{
+        border: solid 5px hsl(36, 94%, 80%);
+        border-radius: 30px;
+        position: relative;
+        padding: 10px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3); /* cien */
+        img{
+            width: 40%;
+            height: 100%;
+            position: absolute;
+            bottom: 0px;
+            right: 0px;
+        }
+        .DescriptionContainer{
+            width: 60%;
+        }
+
+    }
+
+
+}
+.BackgroundContainer{
+    width: 100%;
+    height: 500px;
+    background-position: center;
+    background-size: cover;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3); /* cien */
+    transition: background-image 1s ease-in-out;
+
+
 }
