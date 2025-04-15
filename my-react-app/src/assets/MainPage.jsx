@@ -1,11 +1,13 @@
-import { useEffect, useState } from 'react';
+import { use, useEffect, useState } from 'react';
 import chicken from './images/chicken.png';
 import macand from './images/macand.png';
 import pizza from './images/pizza.png';
 import ratat from './images/ratat.png';
 import udon from './images/udon.png';
 
+import FoodReccomend from './Recipe.jsx';
 import './MainPage.css';
+import Recipe from './Recipe.jsx';
 
 function MainPage(){
     const BackgroundList = [pizza, macand, chicken, ratat, udon];
@@ -13,13 +15,17 @@ function MainPage(){
     const [backgroundDish, setBackgroundDish] = useState(BackgroundList[0])
     const [recipes, setRecipes]= useState([]);
     const [allRecipes, setAllRecipes]= useState([]);
+    const [recipeName, setRecipeName] = useState('');
+    const [FridgeFood, setFridgeFood] = useState([])
+
 
     useEffect(()=>{
         async function GetFoodApi(){
-            const response = await fetch("https://api.spoonacular.com/recipes/complexSearch?number=400&apiKey=4da36d53f6964c109acd650a0a6d7d33");
+            const response = await fetch("https://www.themealdb.com/api/json/v1/1/search.php?s=");
             const data = await response.json();
-            setRecipes(data.results)
-            setAllRecipes(data.results)
+            console.log(data.meals)
+            setRecipes(data.meals)
+            setAllRecipes(data.meals)
 
         }
         GetFoodApi();
@@ -36,11 +42,10 @@ function MainPage(){
         
     },[])
     
-    const [recipeName, setRecipeName] = useState();
 
     function SearchFood(){
         if(recipeName){
-            const SearchedFood = recipes.filter(element=>element.title.toLowerCase().includes(recipeName.toLowerCase()));
+            const SearchedFood = allRecipes.filter(element=>element.strMeal.toLowerCase().includes(recipeName.toLowerCase()));
             setRecipes(SearchedFood);
 
         }
@@ -52,7 +57,44 @@ function MainPage(){
         if(recipeName===""){
             setRecipes(allRecipes)
         }
-    },[recipeName])
+        if(FridgeFood===""){
+            setRecipes(allRecipes)
+        }
+    },[recipeName,FridgeFood])
+
+
+    function SearchFridgeFood() {
+        if (FridgeFood !== "") {
+            let FridgeDishes = [];
+            for (let i = 0; i < 20; i++) {
+                const Index = `strIngredient${i}`; 
+                const IngredientDish = allRecipes.filter(element =>
+                    element[Index] && element[Index].toLowerCase().includes(FridgeFood.toLowerCase()) 
+                );
+                FridgeDishes.push(...IngredientDish); 
+            }
+            setRecipes(FridgeDishes);
+        }
+    }
+    
+    function HandleSearch(){
+        if(recipeName && recipeName.trim() !== ""){
+            SearchFood()
+        }
+        else if(FridgeFood && FridgeFood.trim() !== ""){
+            SearchFridgeFood()
+        }
+    }
+
+    const [singleRecipeIndex, setSinglerecipeIndex]=useState();
+    const [isRecipeDisplayed, setIsrecipeDisplayed] = useState(false)
+    function getSinglerecipe(index){
+        setSinglerecipeIndex(index)
+        setIsrecipeDisplayed(true)
+        console.log(allRecipes[index].strMeal)
+
+    }
+
     return(
 
         
@@ -83,20 +125,24 @@ function MainPage(){
         <div className='RecipesContainer'>
             <h1>Popularne Przepisy</h1>
             <input type="text" placeholder='Wyszukaj przepis' onChange={(event)=>setRecipeName(event.target.value)}/>
-            <button onClick={()=>SearchFood()}>Szukaj</button>
+            <p>lub</p>
+            <input type="text" placeholder='Co masz w lodówce?' onChange={(event)=>setFridgeFood(event.target.value)}/>
+            <button onClick={()=>HandleSearch()}>Szukaj</button>
             {recipes.map((element,index)=>(
-                <div className='SingleRecipeContainer' key={index}>
-                    <div style={{backgroundImage:`url(${element.image})`}}className='DishImage'></div>
-                    <h1 id="Name">{element.title} </h1>
+                <div className='SingleRecipeContainer' key={index} onClick={()=>getSinglerecipe(index)}>
+                    <div style={{backgroundImage:`url(${element.strMealThumb})`}}className='DishImage'></div>
+                    <h1 id="Name">{element.strMeal} </h1>
 
                     <div className='DescriptionContainer'>
-                        <h3 id="Description">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corrupti voluptatibus debitis veniam, consequatur, suscipit blanditiis odio porro ad, earum error sequi nobis dicta a aperiam mollitia nihil doloremque aspernatur! Itaque.</h3>
+                        <h3 id="Description">{element.strArea + " Quisine"}</h3>
                     </div>
                 </div>
 
             ))}
 
         </div>
+        {isRecipeDisplayed &&
+        <Recipe allRecipes = {allRecipes} singleRecipeIndex={singleRecipeIndex}/>}
 
         </>
     )
