@@ -9,12 +9,10 @@ import FoodReccomend from './Recipe.jsx';
 import './MainPage.css';
 import Recipe from './Recipe.jsx';
 
-function MainPage(){
+function MainPage({setRecipes,recipes}){
     const BackgroundList = [pizza, macand, chicken, ratat, udon];
-
+    const [allRecipes, setAllRecipes]=useState([])
     const [backgroundDish, setBackgroundDish] = useState(BackgroundList[0])
-    const [recipes, setRecipes]= useState([]);
-    const [allRecipes, setAllRecipes]= useState([]);
     const [recipeName, setRecipeName] = useState('');
     const [FridgeFood, setFridgeFood] = useState([])
 
@@ -36,7 +34,7 @@ function MainPage(){
             const randomBackgroundIndex = Math.floor(Math.random()*BackgroundList.length);
             setBackgroundDish(BackgroundList[randomBackgroundIndex])
             
-        }, 3000);
+        }, 3000); 
         return () => clearInterval(BackgroundInterval); 
 
         
@@ -100,27 +98,6 @@ function MainPage(){
         
         <>
 
-        <nav>
-            <ul>
-                <li className='Jedzonkowo'>Jedzonkowo</li>
-                <li>Strona główna</li>
-                <li className='Przepisy'>Przepisy
-                    <div>
-                        <ul className="Dishes">
-                            <li>Śniadania</li>
-                            <li>Obiady</li>
-                            <li>Makarony</li>
-                            <li>Zupy</li>
-                            <li>Podwieczorki</li>
-                            <li>Przekąski</li>
-                            <li>Słodkości</li>
-                        </ul>
-                    </div>
-                </li>
-                <li>Dodaj przepis</li>
-                <li>Ulubione przepisy</li>
-            </ul>
-        </nav>
         <div style={{backgroundImage:`url(${backgroundDish})`}} className='BackgroundContainer'></div>
         <div className='RecipesContainer'>
             <h1>Popularne Przepisy</h1>
@@ -142,7 +119,7 @@ function MainPage(){
 
         </div>
         {isRecipeDisplayed &&
-        <Recipe allRecipes = {allRecipes} singleRecipeIndex={singleRecipeIndex}/>}
+        <Recipe recipes = {recipes} singleRecipeIndex={singleRecipeIndex}/>}
 
         </>
     )

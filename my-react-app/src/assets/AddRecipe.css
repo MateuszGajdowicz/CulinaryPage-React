@@ -1,0 +1,25 @@
+.AddRecipeContainer{
+    display: flex;
+    position: absolute;
+    background-color: wheat;
+    height: auto;
+    width: 600px;
+    left: 5%;
+    top: 20%;
+    padding: 10px;
+    flex-direction: column;
+    gap: 10px;
+    #Recipe{
+        min-height: 200px;
+    }
+
+    .ingredientsContainer{
+        display: flex;
+        flex-direction: row;
+        position: relative;
+        gap: 10px;
+        input{
+            height: 30px;
+        }
+    }
+}
