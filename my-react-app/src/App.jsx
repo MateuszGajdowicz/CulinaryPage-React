@@ -8,13 +8,20 @@ import Navbar from './assets/Navbar.jsx'
 function App() {
 
   const [recipes, setRecipes]= useState([]);
+  const [displayAddRecipe, setDisplayAddRecipe]=useState(false)
+
 
   return (
     <>
-    <MainPage recipes={recipes} setRecipes={setRecipes}/>
-    <Navbar/>
-    <AddRecipe setRecipes={setRecipes}/>
+    <Navbar  setDisplayAddRecipe={setDisplayAddRecipe}/>
+    {displayAddRecipe &&
+    <AddRecipe  setDisplayAddRecipe={setDisplayAddRecipe} setRecipes={setRecipes}/>
 
+    }
+
+    <MainPage  recipes={recipes} setRecipes={setRecipes}/>
+    
+ 
 
     </>
   )

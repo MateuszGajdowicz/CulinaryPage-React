@@ -1,5 +1,5 @@
 import './Navbar.css'
-function Navbar(){
+function Navbar({setDisplayAddRecipe}){
     return(
         <>
                 <nav>
@@ -19,7 +19,7 @@ function Navbar(){
                         </ul>
                     </div>
                 </li>
-                <li>Dodaj przepis</li>
+                <li onClick={()=>{setDisplayAddRecipe(prev=>!prev)}}>Dodaj przepis</li>
                 <li>Ulubione przepisy</li>
             </ul>
         </nav>

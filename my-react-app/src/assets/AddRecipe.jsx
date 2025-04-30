@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from 'react';
 import './AddRecipe.css'
-function AddRecipe({setRecipes}){
+function AddRecipe({setRecipes,setDisplayAddRecipe}){
     const [ingredients, setIngredients] = useState([1])
     const [image, setImage] = useState(null)
     const [recipeName, setRecipeName] = useState("");
@@ -34,18 +34,22 @@ function AddRecipe({setRecipes}){
 
 
     function SendRecipe(){
-        const NewRecipeData = {
-            strMeal:recipeName,
-            NewIngredientsList:{
-                name:ingrdientNameList,
-                measure:ingredientsMeasureList,
-            },
-            strArea:recipeQuisine,
-            strInstructions:recipeIntruction,
-            VideoLink:''
-        }
-        setRecipes(prev=>[...prev,NewRecipeData])
+        const newRecipe = {
+            strMeal: recipeName,
+            strArea: recipeQuisine,
+            strInstructions: recipeIntruction,
+            strYoutube: "", 
+            strMealThumb:image,
+        };
+    
+        ingrdientNameList.forEach((name, index) => {
+            newRecipe[`strIngredient${index + 1}`] = name;
+            newRecipe[`strMeasure${index + 1}`] = ingredientsMeasureList[index];
+        });
+    
+        setRecipes(prev => [newRecipe,...prev]);
     }
+    
     return(
         <>
         <div className="AddRecipeContainer">
@@ -70,7 +74,7 @@ function AddRecipe({setRecipes}){
             <input type="text" id="Recipe" placeholder='Instrukcja krok po kroku...' onChange={event=>setRecipeInstruction(event.target.value)}/>
             <p>Dodaj zdjęcie</p>
             <input type="file" placeholder='' onChange={AddImage}/>
-            <button onClick={SendRecipe} >Dodaj przepis</button>
+            <button onClick={()=>{SendRecipe();setDisplayAddRecipe(prev=>!prev)}} >Dodaj przepis</button>
 
 
 
